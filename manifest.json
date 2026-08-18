@@ -1,0 +1,15 @@
+// manifest.json
+{
+  "name": "もちものナビ",
+  "short_name": "もちものナビ",
+  "description": "前日の夜に持ち物を準備する習慣アプリ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f4ff",
+  "theme_color": "#7c6cf0",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

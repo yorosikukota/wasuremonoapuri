@@ -1,0 +1,257 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>もちものナビ</title>
+<meta name="theme-color" content="#7c6cf0">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ===== ホーム画面 ===== -->
+<div class="screen" id="screen-home" data-screen="home">
+  <header class="topbar">
+    <span class="icon-btn">☰</span>
+    <h1>もちものナビ</h1>
+    <span class="icon-btn">🔔</span>
+  </header>
+
+  <div class="card ready-card">
+    <div class="ready-left">
+      <div class="ready-label">今日の準備率</div>
+      <div class="ready-percent"><span id="readyPercent">75</span>%</div>
+      <div class="ready-sub" id="readySub">あと3個で100%！</div>
+    </div>
+    <div class="ready-gauge">
+      <svg viewBox="0 0 100 100" class="gauge-svg">
+        <circle cx="50" cy="50" r="42" class="gauge-bg"/>
+        <circle cx="50" cy="50" r="42" class="gauge-fg" id="gaugeCircle"/>
+      </svg>
+    </div>
+    <div class="kokon-mini">
+      <div class="speech-bubble">あと少し！<br>がんばろう！</div>
+      <div class="kokon-face">🦊</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span>明日の持ち物（<span id="tomorrowDate">6/3 火曜日</span>）</span>
+      <span class="link-btn" id="editListBtn">編集</span>
+    </div>
+    <ul class="check-list" id="checkList"></ul>
+    <button class="btn-add" id="addItemBtn">＋ 持ち物を追加する</button>
+  </div>
+
+  <div class="card pet-mini-card">
+    <div class="card-header"><span>どうぶつのおせわ</span></div>
+    <div class="pet-mini-row">
+      <div class="pet-mini-info">
+        <div class="pet-name">💗 Lv.<span id="petLevelMini">5</span> コロちゃん</div>
+        <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarMini"></div></div>
+        <div class="xp-text" id="xpTextMini">120/200</div>
+      </div>
+      <div class="pet-mini-img">🐕</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== カレンダー（曜日ごとの持ち物） ===== -->
+<div class="screen" id="screen-calendar" data-screen="calendar">
+  <header class="topbar">
+    <span class="icon-btn back-btn" data-back="home">←</span>
+    <h1>曜日ごとの持ち物</h1>
+    <span class="link-btn" id="goAddBtn">＋ 追加</span>
+  </header>
+  <div class="repeat-note">🔁 毎週くり返し</div>
+  <ul class="day-list" id="dayList"></ul>
+</div>
+
+<!-- ===== 持ち物追加 ===== -->
+<div class="screen" id="screen-additem" data-screen="additem">
+  <header class="topbar">
+    <span class="icon-btn back-btn" data-back="calendar">←</span>
+    <h1>持ち物を追加</h1>
+    <span class="link-btn" id="saveItemBtn">保存</span>
+  </header>
+
+  <div class="form-card">
+    <label class="form-label">持ち物の名前</label>
+    <input type="text" id="itemNameInput" placeholder="例）絵の具セット" class="form-input">
+
+    <label class="form-label">くり返し</label>
+    <div class="toggle-row">
+      <button class="toggle-btn active" data-repeat="weekly">毎週</button>
+      <button class="toggle-btn" data-repeat="once">1回だけ</button>
+    </div>
+
+    <label class="form-label">くり返す曜日（複数選択OK）</label>
+    <div class="day-select-row" id="daySelectRow">
+      <button class="day-chip" data-day="mon">月</button>
+      <button class="day-chip" data-day="tue">火</button>
+      <button class="day-chip" data-day="wed">水</button>
+      <button class="day-chip" data-day="thu">木</button>
+      <button class="day-chip" data-day="fri">金</button>
+      <button class="day-chip" data-day="sat">土</button>
+      <button class="day-chip" data-day="sun">日</button>
+    </div>
+
+    <label class="form-label">リマインダー（前日の夜にお知らせ）</label>
+    <input type="time" id="reminderTimeInput" value="21:00" class="form-input time-input">
+    <div class="hint-text">※通知時間は設定画面からいつでも変更できます</div>
+  </div>
+
+  <button class="btn-save" id="saveItemBtn2">保存する</button>
+</div>
+
+<!-- ===== リマインダー設定 ===== -->
+<div class="screen" id="screen-reminder" data-screen="reminder">
+  <header class="topbar">
+    <span class="icon-btn back-btn" data-back="settings">←</span>
+    <h1>リマインダー設定</h1>
+  </header>
+
+  <div class="form-card">
+    <label class="form-label">通知する時間（前日の夜）</label>
+    <input type="time" id="settingTimeInput" value="21:00" class="form-input time-input big-time">
+
+    <label class="form-label">通知する曜日</label>
+    <div class="day-select-row" id="settingDayRow">
+      <button class="day-chip active" data-day="mon">月</button>
+      <button class="day-chip active" data-day="tue">火</button>
+      <button class="day-chip active" data-day="wed">水</button>
+      <button class="day-chip active" data-day="thu">木</button>
+      <button class="day-chip active" data-day="fri">金</button>
+      <button class="day-chip" data-day="sat">土</button>
+      <button class="day-chip" data-day="sun">日</button>
+    </div>
+
+    <label class="form-label">通知メッセージ</label>
+    <textarea id="settingMsgInput" class="form-input" maxlength="20">明日の持ち物を確認しましょう！</textarea>
+    <div class="hint-text"><span id="msgCount">15</span>/20</div>
+    <div class="hint-text">※通知は端末の通知設定をONにしてください</div>
+  </div>
+
+  <button class="btn-save" id="saveReminderBtn">保存する</button>
+  <button class="btn-outline" id="testNotifyBtn">🔔 通知を確認してみる</button>
+</div>
+
+<!-- ===== どうぶつ ===== -->
+<div class="screen" id="screen-pet" data-screen="pet">
+  <header class="topbar">
+    <h1>どうぶつ</h1>
+    <span class="coin-badge">🪙<span id="coinCountPet">250</span></span>
+  </header>
+
+  <div class="card">
+    <div class="pet-mini-row">
+      <div class="pet-mini-info">
+        <div class="pet-name">コロちゃん Lv.<span id="petLevelPet">5</span></div>
+        <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarPet"></div></div>
+        <div class="xp-text" id="xpTextPet">120/200</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header"><span>今日のごきげん</span></div>
+    <div class="heart-row" id="heartRow"></div>
+  </div>
+
+  <div class="pet-stage" id="petStage">
+    <div class="pet-speech" id="petSpeech">わあ！<br>準備がんばってるね！<br>コインをもらったよ！</div>
+    <div class="pet-big" id="petBig">🐕</div>
+  </div>
+
+  <div class="pet-btn-row">
+    <button class="btn-pet" id="carePetBtn">💗 おせわする</button>
+    <button class="btn-pet" id="shopPetBtn">🏪 どうぶつショップ</button>
+  </div>
+</div>
+
+<!-- ===== 記録 ===== -->
+<div class="screen" id="screen-record" data-screen="record">
+  <header class="topbar">
+    <h1>記録</h1>
+  </header>
+
+  <div class="record-row">
+    <div class="card record-half">
+      <div class="card-header"><span>今週の記録（<span id="weekRange">5/27〜6/2</span>）</span></div>
+      <div class="record-gauge-wrap">
+        <svg viewBox="0 0 100 100" class="gauge-svg small">
+          <circle cx="50" cy="50" r="42" class="gauge-bg"/>
+          <circle cx="50" cy="50" r="42" class="gauge-fg" id="weekGaugeCircle"/>
+        </svg>
+        <div class="record-percent"><span id="weekPercent">87</span>%</div>
+      </div>
+      <div class="record-note">よくがんばったね！ 🌱</div>
+    </div>
+    <div class="card record-half">
+      <div class="card-header"><span>連続記録</span></div>
+      <div class="streak-badge">🔥 <span id="streakCount">7</span>日連続！</div>
+      <div class="week-grid" id="weekGrid"></div>
+      <div class="legend">
+        <span>🔵100%達成</span><span>🟢部分的に達成</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 設定 ===== -->
+<div class="screen" id="screen-settings" data-screen="settings">
+  <header class="topbar">
+    <h1>設定</h1>
+  </header>
+  <div class="card settings-list">
+    <div class="settings-item" data-goto="reminder">
+      <span>🔔 リマインダー設定</span><span>›</span>
+    </div>
+    <div class="settings-item" data-goto="calendar">
+      <span>📅 曜日ごとの持ち物</span><span>›</span>
+    </div>
+    <div class="settings-item" id="resetDataBtn">
+      <span>🗑️ データをリセット</span><span>›</span>
+    </div>
+    <div class="settings-item">
+      <span>ℹ️ もちものナビについて</span><span>›</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 通知ダミー画面（オーバーレイ） ===== -->
+<div class="notify-overlay" id="notifyOverlay">
+  <div class="notify-screen">
+    <div class="notify-clock" id="notifyClock">21:00</div>
+    <div class="notify-date" id="notifyDate">6月2日 月曜日</div>
+    <div class="notify-card">
+      <div class="notify-app">🦊 もちものナビ<span class="notify-now">今</span></div>
+      <div class="notify-title">明日の持ち物を確認しましょう！</div>
+      <div class="notify-sub" id="notifySub">あと3個で準備完了だよ🙂</div>
+    </div>
+    <button class="btn-outline notify-close" id="notifyCloseBtn">閉じる</button>
+  </div>
+</div>
+
+<!-- ===== ポップアップ演出 ===== -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup-box" id="popupBox"></div>
+</div>
+
+<!-- ===== 下部ナビゲーション ===== -->
+<nav class="bottom-nav">
+  <button class="nav-item active" data-screen="home"><span class="nav-icon">🏠</span><span>ホーム</span></button>
+  <button class="nav-item" data-screen="calendar"><span class="nav-icon">📅</span><span>カレンダー</span></button>
+  <button class="nav-item" data-screen="pet"><span class="nav-icon">🐾</span><span>どうぶつ</span></button>
+  <button class="nav-item" data-screen="record"><span class="nav-icon">📊</span><span>記録</span></button>
+  <button class="nav-item" data-screen="settings"><span class="nav-icon">⚙️</span><span>設定</span></button>
+</nav>
+
+<script src="script.js"></script>
+</body>
+</html>
