@@ -52,11 +52,11 @@
     <div class="card-header"><span>どうぶつのおせわ</span></div>
     <div class="pet-mini-row">
       <div class="pet-mini-info">
-        <div class="pet-name">💗 Lv.<span id="petLevelMini">5</span> コロちゃん</div>
+        <div class="pet-name">💗 Lv.<span id="petLevelMini">5</span> <span id="petNameMini">コロちゃん</span></div>
         <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarMini"></div></div>
         <div class="xp-text" id="xpTextMini">120/200</div>
       </div>
-      <div class="pet-mini-img">🐕</div>
+      <img class="pet-mini-img" id="petMiniImg" src="assets/pets/shiba.png" alt="コロちゃん">
     </div>
   </div>
 </div>
@@ -151,7 +151,7 @@
   <div class="card">
     <div class="pet-mini-row">
       <div class="pet-mini-info">
-        <div class="pet-name">コロちゃん Lv.<span id="petLevelPet">5</span></div>
+        <div class="pet-name"><span id="petNamePet">コロちゃん</span> Lv.<span id="petLevelPet">5</span></div>
         <div class="xp-bar-track"><div class="xp-bar-fill" id="xpBarPet"></div></div>
         <div class="xp-text" id="xpTextPet">120/200</div>
       </div>
@@ -163,14 +163,56 @@
     <div class="heart-row" id="heartRow"></div>
   </div>
 
+  <div class="card pet-selector-card">
+    <div class="card-header"><span>いっしょに過ごす子</span><span class="pet-selected-label" id="petSelectedLabel">コロちゃん</span></div>
+    <div class="pet-selector">
+      <button class="pet-choice active" data-pet="shiba" aria-label="柴犬のコロちゃんを選ぶ"><img src="assets/pets/shiba.png" alt=""><span>コロ</span></button>
+      <button class="pet-choice" data-pet="calico" aria-label="三毛猫のミイちゃんを選ぶ"><img src="assets/pets/calico.png" alt=""><span>ミイ</span></button>
+      <button class="pet-choice" data-pet="rabbit" aria-label="白うさぎのモカちゃんを選ぶ"><img src="assets/pets/rabbit.png" alt=""><span>モカ</span></button>
+    </div>
+  </div>
+
   <div class="pet-stage" id="petStage">
-    <div class="pet-speech" id="petSpeech">わあ！<br>準備がんばってるね！<br>コインをもらったよ！</div>
-    <div class="pet-big" id="petBig">🐕</div>
+    <div class="pet-speech" id="petSpeech" aria-live="polite">コロだよ！<br>タップしたり、なでてみてね</div>
+    <div class="pet-playground" id="petPlayground">
+      <div class="pet-effect" id="petEffect" aria-hidden="true"></div>
+      <button class="pet-big" id="petBig" aria-label="コロちゃんをタップしたり、左右になでる">
+        <span class="pet-avatar" id="petAvatar">
+          <img class="pet-character-img" id="petCharacterImg" src="assets/pets/shiba.png" alt="コロちゃん">
+          <span class="pet-outfit" id="petOutfit" aria-hidden="true"></span>
+        </span>
+        <span class="pet-shadow"></span>
+      </button>
+      <div class="pet-food" id="petFood" aria-hidden="true">🦴</div>
+    </div>
+    <div class="pet-touch-hint">タップ ／ キャラの上を左右になでる</div>
   </div>
 
   <div class="pet-btn-row">
-    <button class="btn-pet" id="carePetBtn">💗 おせわする</button>
+    <button class="btn-pet" id="carePetBtn">💗 なでる</button>
+    <button class="btn-pet" id="feedPetBtn">🦴 餌をあげる</button>
     <button class="btn-pet" id="shopPetBtn">🏪 どうぶつショップ</button>
+  </div>
+</div>
+
+<!-- ===== どうぶつショップ ===== -->
+<div class="screen" id="screen-shop" data-screen="shop">
+  <header class="topbar">
+    <span class="icon-btn back-btn" data-back="pet">←</span>
+    <h1>どうぶつショップ</h1>
+    <span class="coin-badge">🪙<span id="coinCountShop">250</span></span>
+  </header>
+  <div class="shop-hero">
+    <span class="shop-hero-icon">🏪</span>
+    <div><strong><span id="shopPetName">コロちゃん</span>のおみせ</strong><p>ごほうびコインでお買いものしよう！</p></div>
+  </div>
+  <div class="shop-section">
+    <div class="shop-title"><span>🍽️ おやつ</span><small>買うと1個ふえるよ</small></div>
+    <div class="shop-grid" id="foodShopGrid"></div>
+  </div>
+  <div class="shop-section">
+    <div class="shop-title"><span>👕 おようふく</span><small>買った服はいつでも着られるよ</small></div>
+    <div class="shop-grid" id="clothesShopGrid"></div>
   </div>
 </div>
 

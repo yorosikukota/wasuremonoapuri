@@ -1,12 +1,15 @@
 // sw.js
-const CACHE_NAME = "mochimono-navi-v1";
+const CACHE_NAME = "mochimono-navi-v5";
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
   "./script.js",
   "./manifest.json",
-  "./icon.svg"
+  "./icon.svg",
+  "./assets/pets/shiba.png",
+  "./assets/pets/calico.png",
+  "./assets/pets/rabbit.png"
 ];
 
 self.addEventListener("install", (e)=>{
